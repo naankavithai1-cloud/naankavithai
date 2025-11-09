@@ -1,0 +1,351 @@
+/* ========================================================= */
+/* 8. style.css - PREMIUM BLACK & GOLD THEME - FINAL V2 */
+/* ========================================================= */
+
+/* 1. CSS Variables for Theme Switching */
+:root {
+    --color-primary: #FFD700; /* Gold */
+    --color-secondary: #0A0A0A; /* Deep Black (Header/Cards) */
+    --color-background: #121212; /* Dark Grey Background (Body) */
+    --color-text-light: #E0E0E0; /* Light Text */
+    --color-text-dark: #A0A0A0; /* Subtle Text */
+    --color-accent: #DAA520; /* Darker Gold Accent */
+    --color-error: #FF4444;
+    --font-family-primary: 'Noto Sans Tamil', sans-serif; 
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-accent);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent);
+    transform: translateY(-2px);
+}
+.btn-primary:disabled {
+    background-color: var(--color-text-dark);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ========================================================= */
+/* 2. Header & Navigation */
+/* ========================================================= */
+
+header {
+    background-color: var(--color-secondary);
+    padding: 15px 5%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.sticky-header {
+    position: sticky; /* Changed from fixed to sticky for better mobile behavior */
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+/* Use this if you prefer fixed header: 
+.sticky-header-active { position: fixed; } 
+*/
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo a {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav ul li a {
+    font-size: 16px;
+    padding: 5px 0;
+    position: relative;
+    color: var(--color-text-light);
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+#profile-link {
+    display: none; 
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+/* ========================================================= */
+/* 3. Main Content & Feed (Poem Cards) */
+/* ========================================================= */
+
+main {
+    flex-grow: 1; 
+    padding-top: 20px; /* Adjusted padding as header is sticky now */
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.feed-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.poem-card {
+    background-color: var(--color-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-background);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.poem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(255, 215, 0, 0.1);
+    border-color: var(--color-primary);
+}
+
+.poem-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.content-preview {
+    color: var(--color-text-dark);
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--color-text-dark);
+    margin-top: 10px;
+}
+
+.poem-image-thumb {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid var(--color-accent);
+}
+
+/* Tags Styling */
+.tags-container {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #222;
+    color: var(--color-primary);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* ========================================================= */
+/* 4. Form Styling (Quick Post) */
+/* ========================================================= */
+
+.post-form-card {
+    background-color: var(--color-secondary);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    margin: 20px auto;
+    max-width: 800px;
+    border: 1px solid var(--color-accent);
+}
+
+.submission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-text-light);
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-background);
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: var(--color-text-light);
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.status-success {
+    color: #4CAF50; /* Green */
+}
+.status-error {
+    color: var(--color-error); /* Red */
+}
+.status-loading {
+    color: var(--color-primary);
+}
+
+/* ========================================================= */
+/* 5. Footer & Contact Buttons */
+/* ========================================================= */
+
+footer {
+    background-color: var(--color-secondary);
+    padding: 30px 5%;
+    border-top: 1px solid var(--color-background);
+    text-align: center;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; 
+}
+
+.contact-btn {
+    background-color: var(--color-background);
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; 
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.contact-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    transform: scale(1.1);
+}
+
+.contact-text {
+    font-size: 14px;
+    color: var(--color-text-dark);
+}
+
+/* ========================================================= */
+/* 6. Utility & Responsive */
+/* ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav ul {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .post-form-card {
+        padding: 20px;
+    }
+  }
