@@ -1,0 +1,182 @@
+// =========================================================
+// 15. leaderboard.js - AUTHOR RANKING LOGIC (V2: NaN Fix)
+// =========================================================
+
+// =========================================================
+// 1. CONFIGURATION (Firebase & Owner UID)
+// =========================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyDvO6u6srQuwIRHB0n3FajjYT1GdACrDEw",
+    authDomain: "naankavithai-nk.firebaseapp.com",
+    projectId: "naankavithai-nk",
+    storageBucket: "naankavithai-nk.firebasestorage.app",
+    messagingSenderId: "805424161171",
+    appId: "1:805424161171:web:ffde12b945e8378baf8866"
+};
+const OWNER_UID = "LmTvYY2A13cuQdnUryowcTHiAD82"; 
+const LEADERBOARD_LIMIT = 50; 
+
+// =========================================================
+// 2. FIREBASE SDK IMPORTS & INITIALIZATION
+// =========================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// =========================================================
+// 3. UI Element References
+// =========================================================
+const leaderboardList = document.getElementById('leaderboard-list');
+const userRankInfoP = document.getElementById('user-rank-info');
+const ownerAdminLink = document.getElementById('owner-admin-link');
+
+let currentLoggedInUser = null;
+
+// =========================================================
+// 4. AUTHENTICATION LOGIC
+// =========================================================
+
+function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).catch(error => console.error("Login Failed:", error.message));
+}
+
+onAuthStateChanged(auth, (user) => {
+    // Header UI Update
+    const profileLinkImg = document.getElementById('profile-link');
+    const loginBtn = document.getElementById('google-login-btn');
+    const logoutBtn = document.getElementById('google-logout-btn');
+
+    if (user) {
+        currentLoggedInUser = user;
+        loginBtn.classList.add('hidden');
+        profileLinkImg.src = user.photoURL || 'https://via.placeholder.com/35/0A0A0A/FFD700?text=P';
+        profileLinkImg.classList.remove('hidden');
+        profileLinkImg.onclick = () => window.location.href = `profile.html?uid=${user.uid}`;
+        logoutBtn.classList.remove('hidden');
+        if (user.uid === OWNER_UID) ownerAdminLink.classList.remove('hidden');
+        else ownerAdminLink.classList.add('hidden');
+    } else {
+        currentLoggedInUser = null;
+        loginBtn.classList.remove('hidden');
+        profileLinkImg.classList.add('hidden');
+        logoutBtn.classList.add('hidden');
+        ownerAdminLink.classList.add('hidden');
+    }
+    
+    loadLeaderboard();
+});
+
+document.getElementById('google-login-btn').addEventListener('click', signInWithGoogle);
+document.getElementById('google-logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.reload()));
+document.getElementById('new-post-link').addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    if (!auth.currentUser) signInWithGoogle(); 
+    else window.location.href = 'index.html#quick-post-section';
+});
+
+
+// =========================================================
+// 5. LEADERBOARD LOGIC
+// =========================================================
+
+function renderLeaderboardItem(author, rank) {
+    const item = document.createElement('div');
+    item.className = 'admin-item leaderboard-item';
+    
+    let rankBadgeClass = '';
+    if (rank === 1) rankBadgeClass = 'rank-gold';
+    else if (rank === 2) rankBadgeClass = 'rank-silver';
+    else if (rank === 3) rankBadgeClass = 'rank-bronze';
+
+    const rankHtml = `<div class="rank-badge ${rankBadgeClass}">#${rank}</div>`;
+    
+    const profileLink = `profile.html?uid=${author.uid}`;
+    
+    // FIX: Ensure earningsPoints is treated as a number or defaults to 0
+    const points = author.earningsPoints || 0; 
+    
+    item.innerHTML = `
+        ${rankHtml}
+        <div class="item-content">
+            <img src="${author.photoURL || 'https://via.placeholder.com/40/0A0A0A/FFD700?text=P'}" alt="${author.name}" class="profile-photo leaderboard-photo">
+            <div>
+                <p><strong><a href="${profileLink}">${author.name}</a></strong></p>
+                <p><small>${author.authorBio || 'கவிஞர் சுயவிவரச் சுருக்கம் இல்லை.'}</small></p>
+            </div>
+        </div>
+        <div class="item-actions">
+            <span class="tag-status" style="background-color: var(--color-accent); color: var(--color-secondary); font-size: 14px; font-weight: 700;">
+                ${points} Points
+            </span>
+        </div>
+    `;
+    return item;
+}
+
+async function loadLeaderboard() {
+    leaderboardList.innerHTML = '<p class="loading-message">தரவரிசைப் பட்டியல் ஏற்றப்படுகிறது...</p>';
+    userRankInfoP.textContent = '';
+
+    const q = query(
+        collection(db, "users"),
+        orderBy("earningsPoints", "desc"), 
+        limit(LEADERBOARD_LIMIT)
+    );
+
+    try {
+        const snapshot = await getDocs(q);
+        leaderboardList.innerHTML = '';
+        
+        let userRank = -1;
+
+        if (snapshot.empty) {
+            leaderboardList.innerHTML = '<p class="empty-message">தற்போது தரவரிசையில் எந்தக் கவிஞர்களும் இல்லை.</p>';
+            return;
+        }
+
+        snapshot.forEach((doc, index) => {
+            const authorData = doc.data();
+            const author = { ...authorData, uid: doc.id }; 
+            
+            const rank = index + 1;
+            const item = renderLeaderboardItem(author, rank);
+            leaderboardList.appendChild(item);
+            
+            if (currentLoggedInUser && author.uid === currentLoggedInUser.uid) {
+                userRank = rank;
+            }
+        });
+        
+        if (currentLoggedInUser) {
+            if (userRank !== -1) {
+                userRankInfoP.textContent = `நீங்கள் தற்போது #${userRank} இடத்தில் உள்ளீர்கள். 👏`;
+                userRankInfoP.style.color = 'var(--color-success)';
+            } else {
+                userRankInfoP.textContent = `நீங்கள் முதல் ${LEADERBOARD_LIMIT} தரவரிசையில் இல்லை. (தொடர்ந்து எழுதுங்கள்!)`;
+                userRankInfoP.style.color = 'var(--color-text-light)';
+            }
+        }
+
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        leaderboardList.innerHTML = '<p class="empty-message status-error">தரவரிசையை ஏற்ற முடியவில்லை. பிழை ஏற்பட்டது.</p>';
+    }
+}
+
+
+// =========================================================
+// 6. INITIALIZATION
+// =========================================================
+
+function setCurrentYear() {
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setCurrentYear();
+});
