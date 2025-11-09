@@ -1,0 +1,257 @@
+/* ========================================================= */
+/* 8. style.css - PREMIUM BLACK & GOLD THEME */
+/* ========================================================= */
+
+/* 1. CSS Variables for Theme Switching (Future-Proofing) */
+:root {
+    --color-primary: #FFD700; /* Gold */
+    --color-secondary: #0A0A0A; /* Deep Black */
+    --color-background: #121212; /* Dark Grey Background */
+    --color-text-light: #E0E0E0; /* Light Text */
+    --color-text-dark: #A0A0A0; /* Subtle Text */
+    --color-accent: #DAA520; /* Darker Gold Accent */
+    --color-error: #FF4444;
+    --font-family-primary: 'Arial', sans-serif; /* Placeholder, will be replaced by Tamil font */
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevents horizontal scroll from responsive issues */
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-accent);
+}
+
+/* Buttons - Primary/Gold Style */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent);
+    transform: translateY(-2px);
+}
+
+/* ========================================================= */
+/* 2. Header & Navigation */
+/* ========================================================= */
+
+header {
+    background-color: var(--color-secondary);
+    padding: 15px 5%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo a {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav ul li a {
+    font-size: 16px;
+    padding: 5px 0;
+    position: relative;
+    color: var(--color-text-light);
+}
+
+/* Underline effect for navigation */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Profile Icon/Button */
+#profile-link {
+    display: none; /* Initial state, shown only after login */
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#profile-link:hover {
+    border-color: var(--color-accent);
+}
+
+/* ========================================================= */
+/* 3. Main Content & Feed */
+/* ========================================================= */
+
+main {
+    flex-grow: 1; /* Pushes footer to the bottom */
+    padding-top: 80px; /* Space for the sticky header */
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.feed-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+/* Placeholder Poem Card Style */
+.poem-card {
+    background-color: var(--color-secondary);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-background);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.poem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(255, 215, 0, 0.1);
+    border-color: var(--color-primary);
+}
+
+.poem-card h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+/* ========================================================= */
+/* 4. Footer & Contact Buttons */
+/* ========================================================= */
+
+footer {
+    background-color: var(--color-secondary);
+    padding: 30px 5%;
+    border-top: 1px solid var(--color-background);
+    text-align: center;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; /* Important for responsiveness */
+}
+
+.contact-btn {
+    background-color: var(--color-background);
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 50%; /* Circle shape */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; /* For icons */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.contact-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    transform: scale(1.1);
+}
+
+.contact-text {
+    font-size: 14px;
+    color: var(--color-text-dark);
+}
+
+/* ========================================================= */
+/* 5. Utility Classes & Responsive Design */
+/* ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav ul {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main {
+        padding-top: 150px; /* Adjust space for multi-line header */
+    }
+
+    .logo a {
+        font-size: 24px;
+    }
+}
