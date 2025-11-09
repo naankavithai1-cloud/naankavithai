@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>வருவாய் மையம் | NanKavithai</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="sticky-header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">நா.கவிதை</a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">முகப்பு</a></li>
+                    <li><a href="#" id="new-post-link">புதிய கவிதை</a></li>
+                    <li><a href="leaderboard.html">தரவரிசை</a></li>
+                    <li><a href="admin.html" id="owner-admin-link" class="hidden">அட்மின்</a></li>
+                    <li id="auth-controls">
+                        <button id="google-login-btn" class="btn-primary">Google Login</button>
+                        <img id="profile-link" src="https://via.placeholder.com/35/0A0A0A/FFD700?text=P" alt="Profile" class="hidden">
+                        <button id="google-logout-btn" class="btn-primary hidden">Logout</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <div id="earnings-container" class="profile-card">
+            
+            <h1 style="color: var(--color-primary); margin-bottom: 30px;">வருவாய் மையம் (Earnings Hub)</h1>
+            
+            <div id="auth-check-message" class="hidden" style="text-align: center; padding: 30px;">
+                <p>⚠️ வருவாய் விவரங்களைக் காண Login செய்யவும்.</p>
+            </div>
+
+            <div id="earnings-content" class="hidden">
+
+                <div class="stats-grid earnings-stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-coins"></i>
+                        <span id="current-points">0</span>
+                        <small>மொத்த புள்ளிகள்</small>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span id="total-views">0</span>
+                        <small>மொத்த பார்வைகள்</small>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span id="payout-threshold">1000</span>
+                        <small>குறைந்தபட்ச தொகை (Points)</small>
+                    </div>
+                </div>
+
+                <h2 style="color: var(--color-accent); margin-top: 40px;">பணம் திரும்பப் பெறுவதற்கான கோரிக்கை</h2>
+                
+                <div class="withdrawal-section">
+                    <form id="withdrawal-form" class="submission-form">
+                        
+                        <div class="form-group">
+                            <label for="request-points">கோரப்படும் Points:</label>
+                            <input type="number" id="request-points" required min="1000" placeholder="குறைந்தது 1000 points">
+                            <small style="color: var(--color-text-dark);">1000 Points = X Amount (பணம் மதிப்பை நிர்வாகம் தீர்மானிக்கும்).</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="payment-method">பணம் செலுத்தும் முறை:</label>
+                            <select id="payment-method" required>
+                                <option value="" disabled selected>தேர்வு செய்யவும்</option>
+                                <option value="bank">வங்கி பரிமாற்றம்</option>
+                                <option value="mobile_money">Mobile Money (eg. EZ Cash)</option>
+                                <option value="paypal">PayPal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-details">வங்கி/Account விவரங்கள்:</label>
+                            <textarea id="payment-details" rows="3" required placeholder="Account No, Name, IFSC / Mobile No / PayPal ID"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submit-withdrawal-btn">கோரிக்கையைச் சமர்ப்பிக்க</button>
+                        <p id="withdrawal-status" style="margin-top: 15px; font-weight: bold;"></p>
+                    </form>
+                </div>
+
+                <hr class="profile-divider" style="margin: 40px 0;">
+                
+                <h2 style="color: var(--color-accent);">கவிதை வாரியான வருவாய் அறிக்கை</h2>
+                <div id="poem-earnings-ledger" class="admin-list-container">
+                    <p class="loading-message">கவிதை வாரியான வருவாய் ஏற்றப்படுகிறது...</p>
+                </div>
+
+            </div>
+
+        </div>
+        
+    </main>
+
+    <footer>
+        <div class="contact-buttons-section">
+            <h3 style="color: var(--color-primary);">உடனடித் தொடர்பு மற்றும் குழுமங்கள்</h3>
+            <div class="contact-buttons">
+                <a href="https://wa.me/94752351751" target="_blank" class="contact-btn" title="WhatsApp Chat"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://chat.whatsapp.com/C8BPddhMuTmE2Q0ZA8tIep" target="_blank" class="contact-btn" title="WhatsApp Group"><i class="fab fa-whatsapp-square"></i></a>
+                <a href="https://t.me/Mohammed_Sahan_1" target="_blank" class="contact-btn" title="Telegram ID"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://t.me/Naan_kavithai" target="_blank" class="contact-btn" title="Telegram Channel"><i class="fab fa-telegram"></i></a>
+                <a href="mailto:naankavithai1@gmail.com" class="contact-btn" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.instagram.com/naan__kavithai" target="_blank" class="contact-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <p class="contact-text">&copy; <span id="current-year">2025</span> நா.கவிதை (NanKavithai) | அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+    </footer>
+
+    <script type="module" src="earnings.js"></script>
+
+</body>
+                          </html>
