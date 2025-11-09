@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>அமைப்புகள் & சுயவிவரத் திருத்தம் | NanKavithai</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="sticky-header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="index.html">நா.கவிதை</a>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">முகப்பு</a></li>
+                    <li><a href="#" id="new-post-link">புதிய கவிதை</a></li>
+                    <li><a href="leaderboard.html">தரவரிசை</a></li>
+                    <li><a href="admin.html" id="owner-admin-link" class="hidden">அட்மின்</a></li>
+                    <li id="auth-controls">
+                        <button id="google-login-btn" class="btn-primary">Google Login</button>
+                        <img id="profile-link" src="https://via.placeholder.com/35/0A0A0A/FFD700?text=P" alt="Profile" class="hidden">
+                        <button id="google-logout-btn" class="btn-primary hidden">Logout</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <div id="settings-container" class="profile-card">
+            
+            <h1 style="color: var(--color-primary); margin-bottom: 30px;">சுயவிவரம் & அமைப்புகள்</h1>
+            
+            <div id="auth-check-message" class="hidden" style="text-align: center; padding: 30px;">
+                <p>⚠️ அமைப்புகளை மாற்ற Login செய்யவும்.</p>
+            </div>
+
+            <div id="settings-content" class="hidden">
+
+                <h2 style="color: var(--color-accent); margin-top: 20px;">சுயவிவரத் திருத்தம்</h2>
+                <div class="profile-edit-section submission-form">
+
+                    <div class="form-group" style="text-align: center;">
+                        <img id="current-profile-photo" src="https://via.placeholder.com/100/0A0A0A/FFD700?text=P" alt="Current Photo" class="profile-photo" style="width: 100px; height: 100px; margin-bottom: 10px;">
+                        
+                        <label for="new-profile-photo" class="btn-primary" style="display: inline-block; padding: 8px 15px; cursor: pointer;">
+                            <i class="fas fa-camera"></i> புதிய படம்
+                        </label>
+                        <input type="file" id="new-profile-photo" accept="image/*" style="display:none;">
+                        <p id="photo-upload-status" style="margin-top: 10px; font-size: 14px;"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="author-bio-input">சுயவிவரச் சுருக்கம் (Author Bio):</label>
+                        <textarea id="author-bio-input" rows="4" placeholder="உங்களைப் பற்றிய சில வரிகள்..."></textarea>
+                    </div>
+
+                    <button id="save-profile-btn" class="btn-primary"><i class="fas fa-save"></i> சுயவிவரத்தை சேமி</button>
+                    <p id="profile-save-status" style="margin-top: 10px; font-weight: bold;"></p>
+                </div>
+
+                <hr class="profile-divider" style="margin: 40px 0;">
+
+                <h2 style="color: var(--color-accent);">பக்க அமைப்புகள்</h2>
+                
+                <div class="customization-section submission-form">
+                    
+                    <div class="form-group setting-item">
+                        <label>தீம் (Theme) தேர்வு:</label>
+                        <div class="theme-options">
+                            <button class="btn-primary theme-btn" data-theme="dark"><i class="fas fa-moon"></i> Dark (Default)</button>
+                            <button class="btn-primary theme-btn" data-theme="light"><i class="fas fa-sun"></i> Light (Future)</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group setting-item">
+                        <label for="font-switcher">தமிழ் Font தேர்வு:</label>
+                        <select id="font-switcher">
+                            <option value="'Noto Sans Tamil', sans-serif">Noto Sans Tamil (Default)</option>
+                            <option value="'Lalezar', cursive">Lalezar (Style 1 - Future)</option>
+                            <option value="'Tiro Tamil', serif">Tiro Tamil (Style 2 - Future)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group setting-item">
+                        <label for="font-size-range">எழுத்து அளவு (Font Size): <span id="font-size-value">16px</span></label>
+                        <input type="range" id="font-size-range" min="14" max="20" value="16">
+                    </div>
+
+                    <button id="save-settings-btn" class="btn-primary"><i class="fas fa-save"></i> அமைப்புகளை சேமி</button>
+                    <p id="settings-save-status" style="margin-top: 10px; font-weight: bold;"></p>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+    </main>
+
+    <footer>
+        <div class="contact-buttons-section">
+            <h3 style="color: var(--color-primary);">உடனடித் தொடர்பு மற்றும் குழுமங்கள்</h3>
+            <div class="contact-buttons">
+                <a href="https://wa.me/94752351751" target="_blank" class="contact-btn" title="WhatsApp Chat"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://chat.whatsapp.com/C8BPddhMuTmE2Q0ZA8tIep" target="_blank" class="contact-btn" title="WhatsApp Group"><i class="fab fa-whatsapp-square"></i></a>
+                <a href="https://t.me/Mohammed_Sahan_1" target="_blank" class="contact-btn" title="Telegram ID"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://t.me/Naan_kavithai" target="_blank" class="contact-btn" title="Telegram Channel"><i class="fab fa-telegram"></i></a>
+                <a href="mailto:naankavithai1@gmail.com" class="contact-btn" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.instagram.com/naan__kavithai" target="_blank" class="contact-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <p class="contact-text">&copy; <span id="current-year">2025</span> நா.கவிதை (NanKavithai) | அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+    </footer>
+
+    <script type="module" src="settings.js"></script>
+
+</body>
+  </html>
