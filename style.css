@@ -820,3 +820,70 @@ footer {
         font-size: 14px;
     }
 }
+/* ========================================================= */
+/* 10. Search and Filter Styling (index.html) */
+/* ========================================================= */
+.search-filter-area {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: var(--color-secondary);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#search-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid var(--color-background);
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: var(--color-text-light);
+    font-size: 16px;
+}
+
+#search-input::placeholder {
+    color: var(--color-text-dark);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-filter {
+    background-color: #333;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-text-dark);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 14px;
+}
+
+.btn-filter:hover {
+    background-color: #444;
+}
+
+.btn-filter.active {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border-color: var(--color-primary);
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    border: 1px solid var(--color-text-dark);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    }
